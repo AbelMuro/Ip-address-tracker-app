@@ -48,7 +48,7 @@ function IPdata () {
                         timezone
                     </h2>
                     <p className={styles.data}>
-                        UTC -05:00
+                     {data ? data.location.timezone : ''}
                     </p>
                 </div>
                 <div className={styles.verticalLine}></div>
@@ -57,7 +57,7 @@ function IPdata () {
                         isp
                     </h2>
                     <p className={styles.data}>
-                        SpaceX Starlink
+                    {data ? data.isp : ''}
                     </p>
                 </div>
         </section>
