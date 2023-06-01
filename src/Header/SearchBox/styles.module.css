@@ -1,0 +1,53 @@
+.container{
+    position: relative;
+    display: flex;
+    border: none;
+}
+
+.searchBox{
+    width: 498px;
+    height: 58px;
+    padding-left: 24px;
+    border-radius: 15px 0px 0px 15px;
+    border: none;
+    font-family: var(--font);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21.33px;
+    color: #2C2C2C;
+    transition: none;
+}
+
+.searchBox:focus{
+    outline: none;
+    border: 2px solid black;
+}
+
+.searchBox::placeholder{
+    color: rgba(44, 44, 44, 0.5);
+}
+
+
+.submitButton{
+    width: 58px;
+    height: 58px;
+    background-color: black;
+    border: none;
+    border-radius: 0px 15px 15px 0px;
+    cursor: pointer;
+}
+
+.submitButton:hover{
+    background-color: #3F3F3F;    
+}
+
+.errorMessage{
+    display: none;
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 25px;
+    color: red;
+    position: absolute;
+    bottom: -30px;
+}
