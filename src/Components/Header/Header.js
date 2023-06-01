@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchBox from './SearchBox';
+import IPdata from './IP-Data/IP-Data';
 import styles from './styles.module.css';
 
 function Header() {
@@ -9,6 +10,7 @@ function Header() {
                 IP Address Tracker
             </h1>
             <SearchBox/>
+            <IPdata/>
         </header>    
     )
 }

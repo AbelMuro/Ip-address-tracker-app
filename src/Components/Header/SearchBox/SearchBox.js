@@ -1,10 +1,11 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import styles from './styles.module.css';
 import icons from './icons';
-//need to install redux
+import { ContextQuery } from '../../../Context';
 
 function SearchBox () {
     const [query, setQuery] = useState('');
+    const {dispatchQuery} = useContext(ContextQuery);
     const searchBox = useRef();
     const errorMessage = useRef();
 
@@ -31,11 +32,12 @@ function SearchBox () {
     const handleInvalid = (e) => {
         e.target.setCustomValidity(' ');
         searchBox.current.style.border = '2px solid red';
-        errorMessage.current.style.display = 'block'
+        errorMessage.current.style.display = 'block';
     }
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatchQuery(query);
     }
 
     return (
@@ -51,7 +53,7 @@ function SearchBox () {
                 required
                 />
             <button className={styles.submitButton}>
-                <img src={icons['arrow']} className={styles.arrow}/>
+                <img src={icons['arrow']} className={styles.arrow} alt='arrow'/>
             </button>
             <div className={styles.errorMessage} ref={errorMessage}>
                 Can't be empty

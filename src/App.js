@@ -1,5 +1,6 @@
 import React from 'react';
-import Header from './Header';
+import Header from './Components/Header';
+import ShareContext from './Context';
 import './styles.css';
 
 function App() {
@@ -11,4 +12,4 @@ function App() {
     )
 }
 
-export default App;
+export default ShareContext(App);
