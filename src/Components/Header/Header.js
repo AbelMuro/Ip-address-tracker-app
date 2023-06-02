@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchBox from './SearchBox';
-import IPdata from './IP-Data/IP-Data';
+import IPdata from './IP-Data';
 import styles from './styles.module.css';
 
 function Header() {

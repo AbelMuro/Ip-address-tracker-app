@@ -1,3 +1,3 @@
-import ShareContext, {ContextQuery} from "./Context";
+import ShareContext, {Context} from "./Context";
 
-export {ShareContext as default, ContextQuery}
+export {ShareContext as default, Context}

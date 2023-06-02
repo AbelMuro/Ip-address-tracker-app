@@ -1,29 +1,48 @@
 import React, {useContext, useEffect, useState} from 'react';
 import styles from './styles.module.css';
-import { ContextQuery } from '../../../Context';
+import { Context } from '../../../Context';
+import CircularProgress from '@mui/material/CircularProgress';
+import useMediaQuery from '../../../Hooks/useMediaQuery';
 
 function IPdata () {
-    const {query} = useContext(ContextQuery);
-    const [data, setData] = useState(null)
+    const {query, setOpenDialog, setLatLong} = useContext(Context);
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const mobile = useMediaQuery('(max-width: 620px)');
 
     useEffect(() => {
         const apikey = process.env.apikey;
+        setLoading(true);
 
-        fetch(`https://geo.ipify.org/api/v2/country?apiKey=${apikey}&ipAddress=192.212.174.101`)
+        fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=${apikey}&ipAddress=${query}&domain=${query}`)
             .then((response) => {
-                return response.json()
-            })
+                if(response.status != 200)
+                    throw new Error('Invalid Input');
+                else
+                    return response.json();
+                })
             .then((results) => {
                 setData(results);
+                setLoading(false);
             })
+            .catch((error) => {
+                setLoading(false);
+                setOpenDialog(true);
+            })            
     }, [query])
 
     useEffect(() => {
-        console.log(data)
+        console.log(data);
+        if(data)
+            setLatLong([data.location.lat, data.location.lng]);
     },[data])
 
-    return(
-        <section className={styles.container}>
+    return loading ? 
+        (<section className={styles.loadingContainer}>
+            <CircularProgress className={styles.loadingIcon}/>
+        </section>)
+        :
+        (<section className={styles.container}>
                 <div className={styles.dataContainer}>
                     <h2 className={styles.title}>
                         ip address
@@ -32,17 +51,18 @@ function IPdata () {
                         {data ? data.ip : ''}
                     </p>
                 </div>
-                <div className={styles.verticalLine}></div>
+                {mobile ? <></> : <div className={styles.verticalLine}></div>}
                 <div className={styles.dataContainer}>
                     <h2 className={styles.title}>
                         location
                     </h2>
                     <p className={styles.data}>
-                        {data ? data.location.region : ''}
+                        {data ? data.location.city: ''},
+                        {data ? " " + data.location.region + " " : ''}
                         {data ? data.location.country : ''}
                     </p>
                 </div>
-                <div className={styles.verticalLine}></div>
+                {mobile ? <></> : <div className={styles.verticalLine}></div>}
                 <div className={styles.dataContainer}>
                     <h2 className={styles.title}>
                         timezone
@@ -51,7 +71,7 @@ function IPdata () {
                      {data ? data.location.timezone : ''}
                     </p>
                 </div>
-                <div className={styles.verticalLine}></div>
+                {mobile ? <></> : <div className={styles.verticalLine}></div>}
                 <div className={styles.dataContainer}>
                     <h2 className={styles.title}>
                         isp
@@ -60,8 +80,8 @@ function IPdata () {
                     {data ? data.isp : ''}
                     </p>
                 </div>
-        </section>
-    )
+        </section>)
+    
 }
 
 export default IPdata;

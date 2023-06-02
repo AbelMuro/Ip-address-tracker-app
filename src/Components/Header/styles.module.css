@@ -19,3 +19,17 @@
     font-weight: 500;
     color: white;
 }
+
+@media(max-width: 620px){
+    .container{
+        height: 300px;
+        background-image: url('./images/pattern-bg-mobile.png');
+        gap: 29px;
+    }
+    
+    .title{
+        font-size: 26px;
+        letter-spacing: -0.23px;
+        line-height: 30px;
+    }
+}

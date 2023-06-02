@@ -1,11 +1,11 @@
 import React, {useState, useRef, useContext} from 'react';
 import styles from './styles.module.css';
 import icons from './icons';
-import { ContextQuery } from '../../../Context';
+import { Context } from '../../../Context';
 
 function SearchBox () {
     const [query, setQuery] = useState('');
-    const {dispatchQuery} = useContext(ContextQuery);
+    const {dispatchQuery} = useContext(Context);
     const searchBox = useRef();
     const errorMessage = useRef();
 
@@ -30,6 +30,7 @@ function SearchBox () {
     }
 
     const handleInvalid = (e) => {
+        console.log('invalid')
         e.target.setCustomValidity(' ');
         searchBox.current.style.border = '2px solid red';
         errorMessage.current.style.display = 'block';
@@ -37,9 +38,9 @@ function SearchBox () {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatchQuery(query);
+        dispatchQuery({type: 'set query', query: query});
     }
-
+    
     return (
         <form className={styles.container} onSubmit={handleSubmit}>
             <input 
