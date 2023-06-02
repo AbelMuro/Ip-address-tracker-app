@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import './styles.css';
 import { Context } from '../../Context';
 import icon from './icons'
@@ -12,12 +12,12 @@ var blackIcon = L.icon({
 function Map() {
     const {latLong} = useContext(Context);
     const [map, setMap] = useState();
+    const currentMarker = useRef(null);
     
     useEffect(() => {
         setMap(L.map('map', {                                               //must be an ID of an element
             center: [latLong[0], latLong[1]],
-            zoom: 13,
-            zoomControl: false
+            zoom: 13
         }));
     },[])
 
@@ -25,12 +25,11 @@ function Map() {
         if(!map) return;
 
         L.tileLayer(                                                          //adding a tile layer to the map to give it a specific look
-            `https://tile.openstreetmap.org/{z}/{x}/{y}.png`, 
-          {maxZoom: 19}
+            'https://tile.openstreetmap.org/{z}/{x}/{y}.png', 
+          {maxZoom: 13}
         ).addTo(map);
 
         map.trackResize = true;                                              //track size will update the map everytime the viewport is resized
-        L.marker([latLong[0], latLong[1]], {icon: blackIcon}).addTo(map);                       // adding a marker to the map
 
         return () => {                                                        //clean up
             map.off();
@@ -42,7 +41,10 @@ function Map() {
         if(!map) return;
 
         map.panTo(latLong);
-        L.marker([latLong[0], latLong[1]], {icon: blackIcon}).addTo(map); 
+        if(currentMarker.current)
+            map.removeLayer(currentMarker.current);
+        const marker = L.marker([latLong[0], latLong[1]], {icon: blackIcon}).addTo(map); 
+        currentMarker.current = marker;
 
     }, [latLong])
 
