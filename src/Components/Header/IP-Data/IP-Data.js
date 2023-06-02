@@ -32,7 +32,6 @@ function IPdata () {
     }, [query])
 
     useEffect(() => {
-        console.log(data);
         if(data)
             setLatLong([data.location.lat, data.location.lng]);
     },[data])

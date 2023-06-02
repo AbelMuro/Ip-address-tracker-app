@@ -16,7 +16,8 @@ function Map() {
     useEffect(() => {
         setMap(L.map('map', {                                               //must be an ID of an element
             center: [latLong[0], latLong[1]],
-            zoom: 13
+            zoom: 13,
+            zoomControl: false
         }));
     },[])
 
@@ -24,7 +25,7 @@ function Map() {
         if(!map) return;
 
         L.tileLayer(                                                          //adding a tile layer to the map to give it a specific look
-            'https://tile.openstreetmap.org/{z}/{x}/{y}.png', 
+            `https://tile.openstreetmap.org/{z}/{x}/{y}.png`, 
           {maxZoom: 19}
         ).addTo(map);
 

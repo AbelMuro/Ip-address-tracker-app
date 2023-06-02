@@ -30,7 +30,6 @@ function SearchBox () {
     }
 
     const handleInvalid = (e) => {
-        console.log('invalid')
         e.target.setCustomValidity(' ');
         searchBox.current.style.border = '2px solid red';
         errorMessage.current.style.display = 'block';
